@@ -171,6 +171,21 @@
       .btn{
         padding: 12px 14px;
       }
+      .btn.bubble{
+        background: radial-gradient(circle at 30% 30%, #ffffff, #ff9fcb 70%);
+        color:#4a0030;
+        border:none;
+        box-shadow:
+          0 14px 40px rgba(255,159,203,.55),
+          inset 0 0 12px rgba(255,255,255,.9);
+      }
+      .btn.bubble.secondary{
+        background: radial-gradient(circle at 30% 30%, #ffffff, #ffd1e8 70%);
+        box-shadow:
+          0 10px 30px rgba(255,180,220,.4),
+          inset 0 0 10px rgba(255,255,255,.85);
+        opacity:.9;
+      }
       .word{
         font-size: 42px;
         line-height: 1.05;
@@ -190,9 +205,9 @@
         <div class="sub">Un clic → Pour pimenter nos émissions de radio.</div>
       </div>
       <div class="row">
-        <button class="btn secondary" id="btnReset">Réinitialiser</button>
+        <button class="btn bubble secondary" id="btnReset">Réinitialiser</button>
         <button class="btn dice" id="btnPick">🎲</button>
-        <button class="btn" id="btnPickText">Tirer un mot</button>
+        <button class="btn bubble" id="btnPickText">Tirer un mot</button>
       </div>
     </header>
 
