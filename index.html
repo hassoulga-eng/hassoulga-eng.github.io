@@ -42,7 +42,8 @@
       gap:18px;
     }
     @media (max-width: 860px){
-      .grid{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr; gap:14px;}
+      .card .inner{padding:16px;}
     }
     .card{
       background: rgba(255,255,255,.55);
@@ -94,21 +95,6 @@
       0 22px 45px rgba(255,79,163,.55);
       border: none;
       cursor: pointer;
-    }
-    .btn.dice:
-      position: relative;
-      font-size: 38px;
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background:
-      radial-gradient(circle at 30% 30%, #fff, #ff9fcb 70%);
-      color:#4a0030;
-      box-shadow:
-      0 20px 50px rgba(255,159,203,.6),
-      inset 0 0 14px rgba(255,255,255,.9);
-      border:none;
-      cursor:pointer;
     }
     .btn:active{transform: translateY(1px)}
     .btn.secondary{
@@ -167,6 +153,31 @@
     }
     .footerHint{padding:14px 18px; border-top:1px solid var(--border); color:var(--muted); font-size:12px}
     .k{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+    input, select, textarea, button{
+      font-size: 16px;
+    }
+    @media (max-width: 520px){
+      body{ padding: 14px;
+      }
+      header{
+        align-items: flex-start;
+      }
+      header .row{
+        width: 100%;
+        justify-content: flex-start;
+        gap: 10px;
+      }
+      .btn{
+        padding: 12px 14px;
+      }
+      .word{
+        font-size: 42px;
+        line-height: 1.05;
+      }
+      .bigWord{
+        padding: 16px;
+      }
+    }
   </style>
 </head>
 
