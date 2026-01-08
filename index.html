@@ -14,6 +14,8 @@
       --border:transparent; /* plus de contours visibles */
       --shadow: 0 30px 80px rgba(255,180,220,.45);
       --radius:22px;
+      --panel: rgba(255, 159, 203, .30);  /* rose clair 30% */
+      --panel2: rgba(255, 209, 232, .30); /* rose encore plus doux */
     }
     *{box-sizing:border-box}
     body{
@@ -57,12 +59,16 @@
     label{font-size:12px; color:var(--muted)}
     input[type="text"], textarea, select{
       width:100%;
-      background: rgba(0,0,0,.25);
-      border:1px solid var(--border);
+      background: var(--panel);
+      border: none;
       color:var(--text);
-      border-radius:14px;
-      padding:12px 12px;
+      border-radius:18px;
+      padding:12px 14px;
       outline:none;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.35);
+    }
+    input[type="text"]::placeholder, textarea::placeholder{
+      color: rgba(74,0,48,.55);
     }
     textarea{min-height:120px; resize:vertical}
     .btn{
@@ -107,7 +113,9 @@
       padding:10px 12px;
       border-radius:14px;
       border:1px solid var(--border);
-      background: rgba(0,0,0,.18);
+      background: var(--panel2);
+      border: none;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.35);
       color:var(--muted);
       font-size:13px;
     }
@@ -120,8 +128,10 @@
                   rgba(0,0,0,.12);
     }
     .themeLine{
-      color:var(--muted);
+      color: rgba(74,0,48,.65);
       font-size:14px;
+      width:100%;
+      text-align:center;
     }
     .word{
       font-size: clamp(34px, 5vw, 64px);
@@ -134,7 +144,12 @@
         0 0 18px rgba(244,180,0,.45);
       word-break: break-word;
     }
-    .mini{color:var(--muted); font-size:12px}
+    .mini{
+      color: rgba(74,0,48,.70);
+      font-size:12px;
+      width:100%;
+      text-align:center;
+    }
     .list{
       margin:0; padding:0; list-style:none;
       display:flex; flex-direction:column; gap:8px;
@@ -142,10 +157,11 @@
     }
     .list li{
       display:flex; justify-content:space-between; gap:12px;
-      border:1px solid var(--border);
-      background: rgba(0,0,0,.18);
+      border:none;
+      background: var(--panel2);
       padding:10px 12px; border-radius:14px;
       font-size:14px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.35);
     }
     .badge{
       color:var(--muted);
@@ -191,7 +207,19 @@
         line-height: 1.05;
       }
       .bigWord{
-        padding: 16px;
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+        padding:22px;
+        margin-top:10px;
+        background: var(--panel);
+        border:none;
+        border-radius:22px;
+        box-shadow:
+          0 18px 45px rgba(255,159,203,.18),
+          inset 0 0 0 1px rgba(255,255,255,.35);
+        text-align:center;
+        align-items:center;
       }
     }
   </style>
@@ -202,7 +230,7 @@
     <header>
       <div>
         <h1>🎙️ Mot aléatoire — Psycho-débats</h1>
-        <div class="sub">Un clic → Pour pimenter nos émissions de radio.</div>
+        <div class="sub">Pour pimenter nos émissions de radio.</div>
       </div>
       <div class="row">
         <button class="btn bubble secondary" id="btnReset">Réinitialiser</button>
@@ -250,7 +278,7 @@
           <div class="bigWord">
             <div class="themeLine">Thème : <span id="themeOut" class="k">—</span></div>
             <div class="word" id="wordOut">Clique sur “Tirer un mot”</div>
-            <div class="mini" id="hintOut">Astuce : essaye de le placer naturellement dans ta phrase.</div>
+            <div class="mini" id="hintOut">A placer naturellement dans ta phrase.</div>
           </div>
         </div>
 
