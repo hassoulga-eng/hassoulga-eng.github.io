@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>🎙️ Mot aléatoire — Émission</title>
+  <style>
+    :root{
+      --bg:#0b0f17;
+      --card:#111a2b;
+      --text:#e9eefc;
+      --muted:#a9b5d3;
+      --accent:#6ee7ff;
+      --border:rgba(255,255,255,.08);
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1000px 700px at 20% 10%, rgba(110,231,255,.14), transparent 60%),
+                  radial-gradient(800px 600px at 80% 30%, rgba(167,139,250,.12), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+    .wrap{width:min(980px, 100%); display:grid; gap:18px}
+    header{
+      display:flex; gap:14px; align-items:flex-end; justify-content:space-between; flex-wrap:wrap;
+    }
+    h1{margin:0; font-size:clamp(22px, 3vw, 32px); letter-spacing:.2px}
+    .sub{margin:6px 0 0; color:var(--muted); font-size:14px}
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+    }
+    @media (max-width: 860px){
+      .grid{grid-template-columns:1fr}
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card .inner{padding:18px}
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    label{font-size:12px; color:var(--muted)}
+    input[type="text"], textarea, select{
+      width:100%;
+      background: rgba(0,0,0,.25);
+      border:1px solid var(--border);
+      color:var(--text);
+      border-radius:14px;
+      padding:12px 12px;
+      outline:none;
+    }
+    textarea{min-height:120px; resize:vertical}
+    .btn{
+      appearance:none;
+      border:none;
+      background: linear-gradient(90deg, rgba(110,231,255,.25), rgba(167,139,250,.22));
+      color:var(--text);
+      border:1px solid rgba(110,231,255,.35);
+      padding:12px 14px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:600;
+      transition: transform .06s ease, filter .2s ease;
+    }
+    .btn:active{transform: translateY(1px)}
+    .btn.secondary{
+      background: rgba(255,255,255,.04);
+      border:1px solid var(--border);
+      font-weight:600;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      color:var(--muted);
+      font-size:13px;
+    }
+    .pill input{transform: scale(1.15)}
+    .bigWord{
+      display:flex; flex-direction:column; gap:10px; align-items:flex-start;
+      padding:22px;
+      border-top:1px solid var(--border);
+      background: radial-gradient(900px 500px at 20% 20%, rgba(110,231,255,.16), transparent 55%),
+                  rgba(0,0,0,.12);
+    }
+    .themeLine{
+      color:var(--muted);
+      font-size:14px;
+    }
+    .word{
+      font-size: clamp(34px, 5vw, 64px);
+      line-height:1.02;
+      letter-spacing:.2px;
+      color:var(--accent);
+      font-weight:800;
+      text-shadow: 0 10px 40px rgba(110,231,255,.18);
+      word-break: break-word;
+    }
+    .mini{color:var(--muted); font-size:12px}
+    .list{
+      margin:0; padding:0; list-style:none;
+      display:flex; flex-direction:column; gap:8px;
+      max-height: 420px; overflow:auto; padding-right:6px;
+    }
+    .list li{
+      display:flex; justify-content:space-between; gap:12px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      padding:10px 12px; border-radius:14px;
+      font-size:14px;
+    }
+    .badge{
+      color:var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .footerHint{padding:14px 18px; border-top:1px solid var(--border); color:var(--muted); font-size:12px}
+    .k{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>🎙️ Mot aléatoire — émission</h1>
+        <div class="sub">Un clic → un mot totalement random, à intégrer dans la thématique du jour.</div>
+      </div>
+      <div class="row">
+        <button class="btn secondary" id="btnReset">Réinitialiser</button>
+        <button class="btn" id="btnPick">🎲 Tirer un mot</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- LEFT: main -->
+      <section class="card">
+        <div class="inner">
+          <div class="row" style="width:100%">
+            <div style="flex:1; min-width:240px">
+              <label for="theme">Thématique du jour</label>
+              <input id="theme" type="text" placeholder="Ex: rupture, nostalgie, politique locale, cuisine..." />
+            </div>
+
+            <div style="width:240px">
+              <label for="pack">Pack de mots</label>
+              <select id="pack">
+                <option value="mix">Mix (recommandé)</option>
+                <option value="objets">Objets</option>
+                <option value="verbes">Verbes</option>
+                <option value="emotions">Émotions</option>
+                <option value="absurde">Absurdement random</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:10px">
+            <span class="pill">
+              <input id="noRepeat" type="checkbox" checked />
+              <span>Éviter les doublons</span>
+            </span>
+            <span class="pill">
+              <input id="sound" type="checkbox" />
+              <span>Petit son au tirage</span>
+            </span>
+            <span class="pill">
+              <span>Mots dispo : <b id="remaining">0</b></span>
+            </span>
+          </div>
+
+          <div class="bigWord">
+            <div class="themeLine">Thème : <span id="themeOut" class="k">—</span></div>
+            <div class="word" id="wordOut">Clique sur “Tirer un mot”</div>
+            <div class="mini" id="hintOut">Astuce : essaye de le placer naturellement dans ta phrase.</div>
+          </div>
+        </div>
+
+        <div class="footerHint">
+          Tu peux aussi ajouter vos propres mots : colle une liste (1 mot par ligne) ici 👇
+          <div style="margin-top:10px">
+            <label for="customWords">Mots personnalisés</label>
+            <textarea id="customWords" placeholder="Ex:
+Croissant
+Parapluie
+Trahison
+Boussole"></textarea>
+            <div class="row" style="margin-top:10px">
+              <button class="btn secondary" id="btnUseCustom">Utiliser ces mots</button>
+              <button class="btn secondary" id="btnClearCustom">Vider</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT: history -->
+      <aside class="card">
+        <div class="inner">
+          <div class="row" style="justify-content:space-between">
+            <div>
+              <div style="font-weight:800">Historique</div>
+              <div class="sub" style="margin:6px 0 0">Les derniers mots tirés (session + sauvegarde locale).</div>
+            </div>
+            <button class="btn secondary" id="btnClearHistory">Effacer</button>
+          </div>
+
+          <div style="margin-top:14px">
+            <ul class="list" id="history"></ul>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    // ---------- Packs de mots (modifiables) ----------
+    const PACKS = {
+      mix: [
+        "cactus","boussole","tornade","velours","chaussette","sirène","plomb","moustache","éclipse","puzzle",
+        "paille","miroir","tempête","piano","banquise","trophée","brioche","ruban","murmure","fusée",
+        "batterie","talisman","parapluie","bocal","carnet","grenadine","marée","étincelle","banc","capitaine"
+      ],
+      objets: ["tasse","clé","lampe","valise","câble","carton","brosse","casque","bougie","bracelet","bocal","parapluie","ciseaux","boussole"],
+      verbes: ["décoller","résister","dériver","négocier","avouer","bégayer","savourer","démêler","improviser","rebondir","désamorcer","flamber"],
+      emotions: ["nostalgie","colère","tendresse","jalousie","euphorie","gêne","soulagement","honte","admiration","anxiété","sérénité"],
+      absurde: ["pamplemousse","hibernation","catapulte","cosmonaute","taxidermie","télépathie","kangourou","pétunia","trampoline","ananas"]
+    };
+
+    // ---------- State ----------
+    const els = {
+      theme: document.getElementById("theme"),
+      themeOut: document.getElementById("themeOut"),
+      pack: document.getElementById("pack"),
+      noRepeat: document.getElementById("noRepeat"),
+      remaining: document.getElementById("remaining"),
+      wordOut: document.getElementById("wordOut"),
+      hintOut: document.getElementById("hintOut"),
+      history: document.getElementById("history"),
+      customWords: document.getElementById("customWords"),
+      sound: document.getElementById("sound")
+    };
+
+    const LS_KEY = "radio_word_game_v1";
+    let state = loadState();
+
+    function loadState(){
+      try{
+        const raw = localStorage.getItem(LS_KEY);
+        if(raw) return JSON.parse(raw);
+      }catch(e){}
+      return {
+        theme: "",
+        pack: "mix",
+        customMode: false,
+        customWords: [],
+        used: [],     // mots déjà utilisés (si noRepeat)
+        history: []   // log affiché
+      };
+    }
+
+    function saveState(){
+      localStorage.setItem(LS_KEY, JSON.stringify(state));
+    }
+
+    function currentPool(){
+      if(state.customMode && state.customWords.length){
+        return state.customWords.slice();
+      }
+      return (PACKS[state.pack] || PACKS.mix).slice();
+    }
+
+    function remainingCount(){
+      const pool = currentPool();
+      if(!els.noRepeat.checked) return pool.length;
+      const usedSet = new Set(state.used.map(x => x.toLowerCase()));
+      return pool.filter(w => !usedSet.has(w.toLowerCase())).length;
+    }
+
+    function renderRemaining(){
+      els.remaining.textContent = String(remainingCount());
+    }
+
+    function renderTheme(){
+      const t = (els.theme.value || "").trim();
+      state.theme = t;
+      els.themeOut.textContent = t ? t : "—";
+      saveState();
+    }
+
+    function renderHistory(){
+      els.history.innerHTML = "";
+      const items = state.history.slice().reverse(); // récent en haut
+      if(items.length === 0){
+        const li = document.createElement("li");
+        li.innerHTML = `<span style="color:var(--muted)">Aucun mot tiré pour l’instant.</span>`;
+        els.history.appendChild(li);
+        return;
+      }
+      for(const it of items){
+        const li = document.createElement("li");
+        li.innerHTML = `<span><b>${escapeHtml(it.word)}</b></span><span class="badge">${escapeHtml(it.when)}</span>`;
+        els.history.appendChild(li);
+      }
+    }
+
+    function pickWord(){
+      const pool = currentPool();
+
+      if(pool.length === 0){
+        els.wordOut.textContent = "Ajoute des mots d’abord 🙂";
+        return;
+      }
+
+      let candidates = pool;
+      if(els.noRepeat.checked){
+        const usedSet = new Set(state.used.map(x => x.toLowerCase()));
+        candidates = pool.filter(w => !usedSet.has(w.toLowerCase()));
+      }
+
+      if(candidates.length === 0){
+        els.wordOut.textContent = "Plus de mots disponibles (doublons désactivés).";
+        els.hintOut.textContent = "Clique sur “Réinitialiser” ou décoche “Éviter les doublons”.";
+        renderRemaining();
+        return;
+      }
+
+      const word = candidates[Math.floor(Math.random() * candidates.length)];
+      els.wordOut.textContent = capitalize(word);
+      els.hintOut.textContent = "Défi : intègre-le à la thématique du jour sans le lire comme une liste.";
+
+      if(els.sound.checked) beep();
+
+      // log
+      const now = new Date();
+      const when = now.toLocaleString("fr-FR", {hour:"2-digit", minute:"2-digit"});
+      state.history.push({ word: capitalize(word), when });
+
+      if(els.noRepeat.checked){
+        state.used.push(word);
+      }
+
+      saveState();
+      renderHistory();
+      renderRemaining();
+    }
+
+    function resetSession(){
+      state.used = [];
+      saveState();
+      els.wordOut.textContent = "Clique sur “Tirer un mot”";
+      els.hintOut.textContent = "Astuce : essaye de le placer naturellement dans ta phrase.";
+      renderRemaining();
+    }
+
+    function clearHistory(){
+      state.history = [];
+      saveState();
+      renderHistory();
+    }
+
+    function useCustomWords(){
+      const lines = (els.customWords.value || "")
+        .split("\n")
+        .map(s => s.trim())
+        .filter(Boolean);
+
+      state.customWords = Array.from(new Set(lines)); // unique
+      state.customMode = state.customWords.length > 0;
+      state.used = []; // reset used to avoid conflicts
+      saveState();
+
+      els.wordOut.textContent = state.customMode ? "Mots personnalisés activés ✅" : "Aucun mot personnalisé détecté.";
+      els.hintOut.textContent = state.customMode ? "Clique sur “Tirer un mot” pour tester." : "Colle une liste (1 mot par ligne).";
+      renderRemaining();
+    }
+
+    function clearCustomBox(){
+      els.customWords.value = "";
+      state.customWords = [];
+      state.customMode = false;
+      state.used = [];
+      saveState();
+      renderRemaining();
+      els.wordOut.textContent = "Mots personnalisés désactivés.";
+      els.hintOut.textContent = "Tu es revenu sur le pack sélectionné.";
+    }
+
+    function setPack(){
+      state.pack = els.pack.value;
+      state.customMode = false;  // revenir aux packs
+      state.used = [];
+      saveState();
+      renderRemaining();
+    }
+
+    function hydrateUI(){
+      els.theme.value = state.theme || "";
+      els.pack.value = state.pack || "mix";
+      els.themeOut.textContent = state.theme ? state.theme : "—";
+
+      if(state.customWords?.length){
+        els.customWords.value = state.customWords.join("\n");
+      }
+      renderHistory();
+      renderRemaining();
+    }
+
+    function beep(){
+      // petit bip simple (WebAudio)
+      try{
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = "sine";
+        o.frequency.value = 880;
+        g.gain.value = 0.05;
+        o.connect(g);
+        g.connect(ctx.destination);
+        o.start();
+        setTimeout(() => { o.stop(); ctx.close(); }, 120);
+      }catch(e){}
+    }
+
+    function escapeHtml(str){
+      return String(str).replace(/[&<>"']/g, s => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+      }[s]));
+    }
+
+    function capitalize(s){
+      s = String(s);
+      return s.charAt(0).toUpperCase() + s.slice(1);
+    }
+
+    // ---------- Events ----------
+    document.getElementById("btnPick").addEventListener("click", pickWord);
+    document.getElementById("btnReset").addEventListener("click", resetSession);
+    document.getElementById("btnClearHistory").addEventListener("click", clearHistory);
+    document.getElementById("btnUseCustom").addEventListener("click", useCustomWords);
+    document.getElementById("btnClearCustom").addEventListener("click", clearCustomBox);
+
+    els.theme.addEventListener("input", renderTheme);
+    els.pack.addEventListener("change", setPack);
+    els.noRepeat.addEventListener("change", () => { state.used = []; saveState(); renderRemaining(); });
+    els.sound.addEventListener("change", () => saveState());
+
+    // init
+    hydrateUI();
+  </script>
+</body>
+</html>
