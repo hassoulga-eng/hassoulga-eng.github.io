@@ -75,6 +75,35 @@
       font-weight:600;
       transition: transform .06s ease, filter .2s ease;
     }
+    .btn.dice{
+      position: relative;
+      font-size: 36px;
+      width: 86px;
+      height: 86px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffd1e8, #ff4fa3 70%);
+      color: #3a001f;
+      box-shadow:
+      inset 0 0 10px rgba(255,255,255,.6),
+      inset 0 -10px 16px rgba(160,0,80,.35),
+      0 22px 45px rgba(255,79,163,.55);
+      border: none;
+      cursor: pointer;
+    }
+    .btn.dice::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:50%;
+      background: radial-gradient(circle, rgba(255,255,255,.35) 1px, transparent 2px);
+      background-size: 6px 6px;
+      opacity:.35;
+      pointer-events:none;
+    }
     .btn:active{transform: translateY(1px)}
     .btn.secondary{
       background: rgba(255,255,255,.04);
@@ -143,7 +172,8 @@
       </div>
       <div class="row">
         <button class="btn secondary" id="btnReset">Réinitialiser</button>
-        <button class="btn" id="btnPick">🎲 Tirer un mot</button>
+        <button class="btn dice" id="btnPick">🎲</button>
+        <button class="btn" id="btnPickText">Tirer un mot</button>
       </div>
     </header>
 
@@ -448,6 +478,7 @@ Boussole"></textarea>
 
     // ---------- Events ----------
     document.getElementById("btnPick").addEventListener("click", pickWord);
+    document.getElementById("btnPickText").addEventListener("click", pickWord);
     document.getElementById("btnReset").addEventListener("click", resetSession);
     document.getElementById("btnClearHistory").addEventListener("click", clearHistory);
     document.getElementById("btnUseCustom").addEventListener("click", useCustomWords);
