@@ -256,7 +256,7 @@
                 <option value="objets">Objets</option>
                 <option value="verbes">Verbes</option>
                 <option value="emotions">Émotions</option>
-                <option value="absurde">Absurdement random</option>
+                <option value="absurde">Absurdes</option>
               </select>
             </div>
           </div>
@@ -278,12 +278,12 @@
           <div class="bigWord">
             <div class="themeLine">Thème : <span id="themeOut" class="k">—</span></div>
             <div class="word" id="wordOut">Clique sur “Tirer un mot”</div>
-            <div class="mini" id="hintOut">A placer naturellement dans ta phrase.</div>
+            <div class="mini" id="hintOut">À glisser ni vu ni connu.</div>
           </div>
         </div>
 
         <div class="footerHint">
-          Tu peux aussi ajouter vos propres mots : colle une liste (1 mot par ligne) ici 👇
+          Tu peux aussi ajouter tes propres mots (1 mot par ligne) ici 👇
           <div style="margin-top:10px">
             <label for="customWords">Mots personnalisés</label>
             <textarea id="customWords" placeholder="Ex:
@@ -454,7 +454,7 @@ Boussole"></textarea>
       state.used = [];
       saveState();
       els.wordOut.textContent = "Clique sur “Tirer un mot”";
-      els.hintOut.textContent = "Astuce : essaye de le placer naturellement dans ta phrase.";
+      els.hintOut.textContent = "Glisse-le subtilement, coucou VHE 👀.";
       renderRemaining();
     }
 
