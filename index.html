@@ -445,7 +445,8 @@ Boussole"></textarea>
     function renderTheme(){
       const t = (els.theme.value || "").trim();
       state.theme = t;
-      els.themeOut.textContent = t ? t : "—";
+      const packLabel = els.pack.options[els.pack.selectedIndex].text;
+      els.themeOut.textContent = packLabel;
       saveState();
     }
 
