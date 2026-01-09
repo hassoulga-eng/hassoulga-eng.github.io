@@ -323,11 +323,57 @@ Boussole"></textarea>
     // ---------- Packs de mots (modifiables) ----------
     const PACKS = {
       const CATEGORIES = {
-      objets: ["tasse","clé","lampe","valise","câble","carton","brosse","casque","bougie","bracelet","bocal","parapluie","ciseaux","boussole"],
-      verbes: ["décoller","résister","dériver","négocier","avouer","bégayer","savourer","démêler","improviser","rebondir","désamorcer","flamber"],
-      emotions: ["nostalgie","colère","tendresse","jalousie","euphorie","gêne","soulagement","honte","admiration","anxiété","sérénité"],
-      absurde: ["pamplemousse","hibernation","catapulte","cosmonaute","taxidermie","télépathie","kangourou","pétunia","trampoline","ananas"],
-      themes_radio: ["micro","antenne","auditeur","direct","chronique","débat","silence","buzz","montage","jingle","impro","pause","contradiction","argument"]
+      objets: ["micro","casque","carnet","stylo","tasse","boussole","parapluie","miroir","bougie","coussin",
+    "bracelet","collier","bague","porte-clés","clé","valise","agenda","photo","lettre","enveloppe",
+    "vinyle","livre","marque-page","doudou","pull","écharpe","sac","lunettes","parfum","savon",
+    "coffret","boîte","bocal","ruban","plume","fleur","coquillage","galet","pince","barrette",
+    "gourde","thermos","chargeur","câble","clé USB","batterie","lampe","guirlande","horloge","réveil",
+    "téléphone","écouteurs","haut-parleur","appareil photo","carte postale","ticket","badge","sticker","poster","pinceau",
+    "palette","rouge à lèvres","vernis","crème","bracelet porte-bonheur","talisman","porte-monnaie","monnaie","carte","plan",
+    "coque","trousse","ciseaux","colle","scotch","aimant","gomme","règle","compas","briquet",
+    "allumettes","cendrier","mug","bol","assiette","cuillère","fourchette","serviette","cadenas","chaîne"
+      ],
+      verbes: ["déclencher","provoquer","assumer","mentir","avouer","négocier","insister","nuancer","exagérer","dramatiser",
+    "déraper","interrompre","relancer","improviser","sauver","trahir","pardonner","fuir","revenir","disparaître",
+    "observer","analyser","démonter","retourner","tacler","piquer","déstabiliser","rassurer","réconcilier","clasher",
+    "s’effondrer","rebondir","surjouer","se contenir","s’enflammer","désamorcer","couper","résister","dominer","répliquer",
+    "s’expliquer","convaincre","douter","affirmer","critiquer","applaudir","siffler","ignorer","attaquer","défendre",
+    "dévier","déplacer","détourner","brouiller","clarifier","résumer","reformuler","accuser","justifier","excuser",
+    "humilier","flatter","charmer","manipuler","bluffer","menacer","régler","trancher","temporiser","frapper fort",
+    "mettre la pression","lâcher une bombe","glisser un sous-entendu","mettre les pieds dans le plat","faire diversion","prendre la fuite","faire un comeback","faire monter la sauce","calmer le jeu","mettre fin",
+    "révéler","dénoncer","contredire","soutenir","détruire","réparer","réinventer","bousculer","succomber","se venger"
+      ],
+      emotions: ["joie","colère","tristesse","peur","honte","culpabilité","envie","jalousie","admiration","nostalgie",
+    "mélancolie","euphorie","stress","anxiété","angoisse","sérénité","fatigue","lassitude","espoir","déception",
+    "regret","soulagement","frustration","tendresse","attachement","désir","ennui","curiosité","fierté","solitude",
+    "apaisement","panique","confiance","méfiance","impatience","gratitude","amertume","gêne","exaltation","découragement",
+    "excitation","irritation","compassion","empathie","indifférence","suspicion","satisfaction","plaisir","doute","dégoût",
+    "surprise","choc","délivrance","rancœur","calme","hésitation","tension","courage","vulnérabilité","soul",
+    "amour","haine","obsession","crush","cœur brisé","flou","vide","épuisement","overthinking","légèreté",
+    "sentiment d’injustice","syndrome de l’imposteur","foi","lucidité","déni","rage","pudeur","trouille","pulsion","attente",
+    "hypervigilance","incompréhension","attirance","timidité","bienveillance","fermeture","ouverture","nostalgie douce","mal du pays","sensation de trop-plein"
+      ],
+      absurde: ["paillettes","licorne","trampoline","pamplemousse","clown","fantôme","robot","zombie","sirène","ananas",
+    "cornichon","kangourou","tornade","catapulte","soucoupe","glitch","bug","plot twist","catastrophe","apocalypse",
+    "malédiction","cauchemar","spectre","rituel","sortilège","venin","poison","conspiration","secte","mystère",
+    "disparition","décès","mort","funérailles","enterrement","tragédie","drame","chaos","panique","hystérie",
+    "obsession","manipulation","mensonge","trahison","vengeance","otage","torture","interrogatoire","prison","évasion",
+    "propagande","censure","scandale","fake news","lobby","décret","élection","révolte","manif","coup d’État",
+    "inflation","pénurie","canicule","effondrement","éco-anxiété","greenwashing","boycott","sobriété","dystopie","survival",
+    "zhommes","ego","mansplaining","bro-code","cringe","red flag","pick-me","ghosting","love bombing","toxic",
+    "boobs","push-up","décolleté","gloss","latex","talons","paillettes XXL","telenovela","drama queen","main character",
+    "Chili","piment","salsa","tacos","nachos","guacamole","tequila (vibe)","fiesta","cumbia","piñata"
+      ],
+      themes_radio: ["antenne","direct","jingle","chronique","plateau","studio","auditeur","standard","appel","interview",
+    "invité","rubrique","transition","top horaire","pause musicale","playlist","programmation","signal","podcast","stream",
+    "émission","animateur","animatrice","réal","réalisateur","montage","coupure","silence radio","buzz","viralité",
+    "fact-check","opinion","controverse","polémique","contradiction","argument","prise de parole","temps d’antenne","sondage","message vocal",
+    "habillage","virgule sonore","générique","bed musical","lancement","conclusion","réaction","débrief","hot take","micro-trottoir",
+    "éditorial","tribune","droit de réponse","clash","débat","round","tour de table","timing","régie","retour casque",
+    "niveau sonore","balance","mixage","audio","HF","saturation","latence","coulisses","off","on air",
+    "ligne","SMS auditeurs","DM","réseaux sociaux","live","extrait","best-of","teaser","bande-annonce","storytime",
+    "question du jour","minute culture","coup de gueule","coup de cœur","invité surprise","appel mystère","jeu antenne","pause pub","habillage pub","partenaire"
+      ]
     };
 
     function buildGeneralPool(){
