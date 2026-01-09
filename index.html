@@ -252,11 +252,12 @@
             <div style="width:240px">
               <label for="pack">Pack de mots</label>
               <select id="pack">
-                <option value="mix">Mix (recommandé)</option>
-                <option value="objets">Objets</option>
-                <option value="verbes">Verbes</option>
-                <option value="emotions">Émotions</option>
-                <option value="absurde">Absurdes</option>
+                <option value="general">Chaos Pailleté (toutes catégories)</option>
+                <option value="objets">Objets Chéris</option>
+                <option value="verbes">Drama Moves</option>
+                <option value="emotions">Feels</option>
+                <option value="absurde">Delulu</option>
+                <option value="themes_radio">FM</option>
               </select>
             </div>
           </div>
@@ -321,16 +322,18 @@ Boussole"></textarea>
   <script>
     // ---------- Packs de mots (modifiables) ----------
     const PACKS = {
-      mix: [
-        "cactus","boussole","tornade","velours","chaussette","sirène","plomb","moustache","éclipse","puzzle",
-        "paille","miroir","tempête","piano","banquise","trophée","brioche","ruban","murmure","fusée",
-        "batterie","talisman","parapluie","bocal","carnet","grenadine","marée","étincelle","banc","capitaine"
-      ],
+      const CATEGORIES = {
       objets: ["tasse","clé","lampe","valise","câble","carton","brosse","casque","bougie","bracelet","bocal","parapluie","ciseaux","boussole"],
       verbes: ["décoller","résister","dériver","négocier","avouer","bégayer","savourer","démêler","improviser","rebondir","désamorcer","flamber"],
       emotions: ["nostalgie","colère","tendresse","jalousie","euphorie","gêne","soulagement","honte","admiration","anxiété","sérénité"],
-      absurde: ["pamplemousse","hibernation","catapulte","cosmonaute","taxidermie","télépathie","kangourou","pétunia","trampoline","ananas"]
+      absurde: ["pamplemousse","hibernation","catapulte","cosmonaute","taxidermie","télépathie","kangourou","pétunia","trampoline","ananas"],
+      themes_radio: ["micro","antenne","auditeur","direct","chronique","débat","silence","buzz","montage","jingle","impro","pause","contradiction","argument"]
     };
+
+    function buildGeneralPool(){
+      return Object.values(CATEGORIES).flat();
+    }
+
 
     // ---------- State ----------
     const els = {
@@ -356,7 +359,7 @@ Boussole"></textarea>
       }catch(e){}
       return {
         theme: "",
-        pack: "mix",
+        pack: "general",
         customMode: false,
         customWords: [],
         used: [],     // mots déjà utilisés (si noRepeat)
@@ -372,7 +375,11 @@ Boussole"></textarea>
       if(state.customMode && state.customWords.length){
         return state.customWords.slice();
       }
-      return (PACKS[state.pack] || PACKS.mix).slice();
+      if(state.pack === "general"){
+        return buildGeneralPool().slice();
+      }
+
+      return (CATEGORIES[state.pack] || buildGeneralPool()).slice();
     }
 
     function remainingCount(){
@@ -501,7 +508,7 @@ Boussole"></textarea>
 
     function hydrateUI(){
       els.theme.value = state.theme || "";
-      els.pack.value = state.pack || "mix";
+      els.pack.value = state.pack || "general";
       els.themeOut.textContent = state.theme ? state.theme : "—";
 
       if(state.customWords?.length){
